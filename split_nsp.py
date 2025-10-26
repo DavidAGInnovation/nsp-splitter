@@ -86,8 +86,12 @@ def parse_size(value: str) -> int:
 
 
 def build_part_name(base_path: str, index: int) -> str:
-    """Return the NX-friendly part filename (e.g. file.nsp.00)."""
-    return f"{base_path}.{index:02d}"
+    """Return the part filename keeping the original extension suffix."""
+    stem, ext = os.path.splitext(base_path)
+    suffix = f".{index:02d}"
+    if ext:
+        return f"{stem}{suffix}{ext}"
+    return f"{base_path}{suffix}"
 
 
 def split_file(
